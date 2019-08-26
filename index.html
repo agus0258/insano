@@ -3,21 +3,18 @@
   <head>
   </head>
   <body onload="init();">
-    <h1>Take a snapshot of the current video stream</h1>
-   Click on the Start WebCam button.
+    <h1>SUAT Scan
      <p>
-    <button onclick="startWebcam();">Start WebCam</button>
-    <button onclick="stopWebcam();">Stop WebCam</button>
-    <button onclick="snapshot();">Analizar</button>
+    <button onclick="snapshot();detect_objects();">Analizar</button>
     </p>
-    <video onclick="snapshot(this);" width=800 height=500 id="video" controls autoplay></video>
+    <video onclick="snapshot(this);" width=800 height=500 id="live" autoplay></video>
   <p>
 
         Screenshots : <p>
       <canvas  id="myCanvas" width = 800 height = 500></canvas>
-    <p> After taking a picture, click on the button below to see the objects that have been detected in your image. </p> <br>
+    </p> <br>
 
-    <button onclick="detect_objects();"> Detect Objects</button>
+
     <p> </p>
     <div>
       <span id="status"> </span>
@@ -26,8 +23,7 @@
   </body>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script> <!-- Load tensorflow.js -->
-  <script src='https://code.responsivevoice.org/responsivevoice.js'></script> <!-- Load the pre-trained model -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script> <!-- Load the text to speech API -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script> <!-- Load the pre-trained model -->
 
   <script>
 
@@ -42,7 +38,6 @@
                  audio: false
               };
 
-      function startWebcam() {
         if (navigator.mediaDevices.getUserMedia) {
            navigator.mediaDevices.getUserMedia (constraints)
            .then(function(localMediaStream) {
@@ -59,12 +54,8 @@
         } else {
            console.log("getUserMedia not supported");
         }
-      }
+      
 
-      function stopWebcam() {
-          webcamStream.getTracks()[0].stop();
-          webcamStream.getTracks()[1].stop();
-      }
       //---------------------
       // TAKE A SNAPSHOT CODE
       //---------------------
@@ -100,13 +91,6 @@
           }
         }
         return out;
-      }
-
-      function tts(o) {
-        var out = '';
-        for (i = 0; i < o.length; i++) {
-          window.setTimeout(responsiveVoice.speak(o[i]['class'] + ' with probability ' + o[i]['score'].toFixed(2)  + ' '), 100);
-          }
       }
 
 
