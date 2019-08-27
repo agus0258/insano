@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body onload="init();">
+    <h1>SUAT Scan
+     <p>
+    <button onclick="snapshot();detect_objects();">Analizar</button>
+    </p>
+    <video onclick="snapshot(this);" width=800 height=500 id="live" autoplay></video>
+
+    <div>
+      <span id="status"> </span>
+    </div>
+    <p id="showPreds"> </p>
+  </body>
+
+  
+  <script>
+
+      //--------------------
+      // GET USER MEDIA CODE
+      //--------------------
+      var video;
+      var webcamStream;
+
+      let constraints = {
+                 video: {facingMode : "environment"},
+                 audio: false
+              };
+
+        if (navigator.mediaDevices.getUserMedia) {
+           navigator.mediaDevices.getUserMedia (constraints)
+           .then(function(localMediaStream) {
+                 video = document.querySelector('video');
+                 //video = document.createElement('video');
+                 //video.src = window.URL.createObjectURL(localMediaStream);
+                 video.srcObject = localMediaStream;
+                 webcamStream = localMediaStream;
+              })
+            .catch(function(err) {
+                 console.log("getUserMedia error" + err);
+              });
+
+        } else {
+           console.log("getUserMedia not supported");
+        }
+      
+
+        </script>
+
+  </script>
+
+</html>
